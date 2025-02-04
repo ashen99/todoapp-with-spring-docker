@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class TodoServiceImpl implements TodoService {
     @Autowired
     TodoRepository todoRepository;
 
+    /**
+     * Adds a new todo to the database
+     *
+     * @param todoRequest TodoRequest
+     * @return TodoResponse
+     */
     @Override
     public TodoResponse createTodo(TodoRequest todoRequest) {
         Todo todo = Todo.builder()
@@ -41,6 +45,12 @@ public class TodoServiceImpl implements TodoService {
                 .build();
     }
 
+    /**
+     * Deletes a todo from the database
+     *
+     * @param id Long
+     * @return TodoResponse
+     */
     @Override
     public TodoResponse deleteTodo(Long id) {
         Todo todo = todoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Todo not found with id :" + id));
@@ -58,6 +68,11 @@ public class TodoServiceImpl implements TodoService {
                 .build();
     }
 
+    /**
+     * Returns the latest 5 todos from the database
+     *
+     * @return List<Todo>
+     */
     @Override
     public List<Todo> findLatestTodos() {
 
